@@ -7,6 +7,7 @@
 
 #define GPIOA_Base 0x40020000
 #define GPIOA_MODER *((volatile uint32_t*)(GPIOA_Base + 0x00))
+#define GPIOA_AFRL *((volatile uint32_t*)(GPIOA_Base + 0x20))
 
 #define SPI1_Base 0x40013000
 #define SPI_CR1 *((volatile uint32_t*)(SPI1_Base + 0x00))
@@ -28,8 +29,8 @@ void spi1_gpioinit(){
     GPIOA_MODER |= (1<<0);
 
     // enable PA7,6,5 in SPI1(AF5 = 0b0101)
-    GPIOA_MODER &= ~((15<<20)|(15<<24)|(15<<28));
-    GPIOA_MODER |= (5<<20)|(5<<24)|(5<<28);
+    GPIOA_AFRL &= ~((15<<20)|(15<<24)|(15<<28));
+    GPIOA_AFRL |= (5<<20)|(5<<24)|(5<<28);
 }
 
 void spi1_config(){
