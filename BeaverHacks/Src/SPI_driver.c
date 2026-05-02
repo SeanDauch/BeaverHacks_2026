@@ -43,7 +43,7 @@ void spi1_config(){
 
 // array of 8-bit data with size data_size
 void spi1_send(uint8_t *data, uint32_t data_size){
-    for(int i = 0; i<data_size ; data_size++){
+    for(int i = 0; i<data_size ; i++){
         
         // wait for not busy
         while(SPI_SR & (1<<7)){}
