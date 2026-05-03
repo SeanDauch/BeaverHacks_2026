@@ -43,6 +43,9 @@ set(cpu_PARAMS
 # Sources
 set(sources_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/Src/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/Delay.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/ILI9341.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/SPI_driver.c
 )
 
 # Include directories for all compilers
