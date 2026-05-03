@@ -12,6 +12,6 @@ int main(){
     ball game_ball = bouncing_ball_init(200, 120, 10);
 
 	while(1){
-        //move_ball(&game_ball);
+        move_ball(&game_ball);
     }
 }
