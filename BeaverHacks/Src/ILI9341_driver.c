@@ -9,6 +9,11 @@
 #define GPIOA_OSPEEDR *((volatile uint32_t*)(GPIOA_Base + 0x08))
 #define GPIOA_ODR *((volatile uint32_t*)(GPIOA_Base + 0x14))
 
+#define SPI1_Base 0x40013000
+#define SPI_CR1 *((volatile uint32_t*)(SPI1_Base + 0x00))
+#define SPI_SR *((volatile uint32_t*)(SPI1_Base + 0x08))
+#define SPI_DR *((volatile uint32_t*)(SPI1_Base + 0x0C))
+
 static void DC_Command(){
     GPIOA_ODR &= ~(1<<1); // Pull PA1 LOW for Commands
 }
@@ -109,8 +114,19 @@ void draw_Square(uint16_t start_col, uint16_t end_col, uint16_t start_row, uint1
 
     int total_pixel = ((end_col-start_col+1)*(end_row-start_row+1));
     WriteCommand(0x2C); // Memory Write
+
+        DC_Data();
+        CS_enable();
+
         for(int i = 0; i<total_pixel; i++){
-            WriteData(RGB_color >> 8); // High bit
-            WriteData((uint8_t)RGB_color);
+
+            while(!(SPI_SR & (1<<1))){}
+            SPI_DR = (RGB_color>>8); // High bit
+
+            while(!(SPI_SR & (1<<1))){}
+            SPI_DR = ((uint8_t) RGB_color); // Low bit
         }
+
+        while(SPI_SR & (1<<7)){}
+        CS_disable();
 }
