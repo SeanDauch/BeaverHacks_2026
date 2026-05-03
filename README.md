@@ -1,6 +1,7 @@
 # BeaverHacks_2026
 
 To Do:
+
     1. Make SPI driver - DONE
     2. Use spi to make lcd drivers - DONE
         2a. Decide if we need DMA - Dont have time
