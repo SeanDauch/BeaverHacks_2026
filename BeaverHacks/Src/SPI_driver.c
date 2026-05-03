@@ -32,6 +32,8 @@ void spi1_gpioinit(){
     // enable PA7,6,5 in SPI1(AF5 = 0b0101)
     GPIOA_AFRL &= ~((15<<20)|(15<<24)|(15<<28));
     GPIOA_AFRL |= (5<<20)|(5<<24)|(5<<28);
+    GPIOA_AFRL &= ~((15<<20)|(15<<24)|(15<<28));
+    GPIOA_AFRL |= (5<<20)|(5<<24)|(5<<28);
 }
 
 void spi1_config(){
