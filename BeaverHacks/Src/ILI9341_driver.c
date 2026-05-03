@@ -68,7 +68,7 @@ void ILI9341_Init(){
     delay_SysTick(120, system_frequency);
 
     WriteCommand(0x11); // Sleep Out
-    delay_SysTick(5, system_frequency);
+    delay_SysTick(120, system_frequency);
     
     WriteCommand(0x3A); // Pixel Format Set
     WriteData(0b01010101); // 16bits/pixel
@@ -77,6 +77,7 @@ void ILI9341_Init(){
     WriteData(0); //! Change to rearagne display
 
     WriteCommand(0x29); // Display ON
+    delay_SysTick(20, system_frequency);
 }
 
 void draw_Square(uint16_t start_col, uint16_t end_col, uint16_t start_row, uint16_t end_row, char color){
@@ -119,12 +120,22 @@ void draw_Square(uint16_t start_col, uint16_t end_col, uint16_t start_row, uint1
         CS_enable();
 
         for(int i = 0; i<total_pixel; i++){
-
+            /*
             while(!(SPI_SR & (1<<1))){}
             SPI_DR = (RGB_color>>8); // High bit
 
             while(!(SPI_SR & (1<<1))){}
-            SPI_DR = ((uint8_t) RGB_color); // Low bit
+            SPI_DR = ((uint8_t) RGB_color); // Low bit*/
+
+            while(!(SPI_SR & (1<<1))){}
+            SPI_DR = (RGB_color >> 8);
+            while(!(SPI_SR & (1<<0))){} // Wait for RXNE (byte received)
+            (void)SPI_DR;                // Read and discard to clear flag
+
+            while(!(SPI_SR & (1<<1))){}
+            SPI_DR = ((uint8_t) RGB_color);
+            while(!(SPI_SR & (1<<0))){}
+            (void)SPI_DR;
         }
 
         while(SPI_SR & (1<<7)){}

@@ -46,7 +46,9 @@ set(sources_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/Delay.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/ILI9341_driver.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/SPI_driver.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Src/game.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/pong.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/pong_parts/ball.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/pong_parts/paddle.c
 )
 
 # Include directories for all compilers

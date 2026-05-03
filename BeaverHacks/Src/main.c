@@ -1,5 +1,5 @@
 #include "ILI9341_driver.h"
-#include "game.h"
+#include "pong.h"
 
 #include <stdint.h>
 
@@ -9,9 +9,11 @@ int main(){
 
     fill_screen('w');
 
-    ball game_ball = bouncing_ball_init(200, 120, 10);
+    game my_game = game_init(10, 20);
 
+    play_game(&my_game);
+    
 	while(1){
-        move_ball(&game_ball);
+
     }
 }
