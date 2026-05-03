@@ -8,6 +8,7 @@
 
 #define GPIOA_Base 0x40020000
 #define GPIOA_MODER *((volatile uint32_t*)(GPIOA_Base + 0x00))
+#define GPIOA_OSPEEDR *((volatile uint32_t*)(GPIOA_Base + 0x08))
 #define GPIOA_ODR *((volatile uint32_t*)(GPIOA_Base + 0x14))
 #define GPIOA_AFRL *((volatile uint32_t*)(GPIOA_Base + 0x20))
 
@@ -29,6 +30,9 @@ void spi1_gpioinit(){
     // enable A0 as output for CS
     GPIOA_MODER &= ~(3<<0);
     GPIOA_MODER |= (1<<0);
+
+    // set P7,6,5,0 to high speed
+    GPIOA_OSPEEDR |= (3<<0)|(3<<10)|(3<<12)|(3<<14);
 
     // enable PA7,6,5 in SPI1(AF5 = 0b0101)
     GPIOA_AFRL &= ~((15<<20)|(15<<24)|(15<<28));

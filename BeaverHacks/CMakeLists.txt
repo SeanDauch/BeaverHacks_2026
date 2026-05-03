@@ -22,7 +22,7 @@
 
 # Core project settings
 project("BeaverHacks")
-enable_language(C CXX ASM)
+enable_language(C ASM)
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Setup compiler settings
@@ -44,7 +44,7 @@ set(cpu_PARAMS
 set(sources_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/Src/main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/Delay.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Src/ILI9341.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/ILI9341_driver.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/SPI_driver.c
 )
 

@@ -6,6 +6,7 @@
 
 #define GPIOA_Base 0x40020000
 #define GPIOA_MODER *((volatile uint32_t*)(GPIOA_Base + 0x00))
+#define GPIOA_OSPEEDR *((volatile uint32_t*)(GPIOA_Base + 0x08))
 #define GPIOA_ODR *((volatile uint32_t*)(GPIOA_Base + 0x14))
 
 static void DC_Command(){
@@ -47,13 +48,16 @@ void ILI9341_Init(){
     spi1_config();
     
     // initilize P1,2 for output
-    GPIOA_MODER &= ~((3<<10)|(3<<12));
+    GPIOA_MODER &= ~((3<<2)|(3<<4));
     GPIOA_MODER |= (1<<2)|(1<<4);
+    // set P1,2 to high speed
+    GPIOA_OSPEEDR |= (3<<2)|(3<<4);
 
     // begining init sequence for LCD
     RST_LOW();
-    delay_SysTick(1, system_frequency);
+    delay_SysTick(50, system_frequency);
     RST_HIGH();
+    delay_SysTick(50, system_frequency);
 
     WriteCommand(0x01); // Software Reset
     delay_SysTick(120, system_frequency);
@@ -68,4 +72,45 @@ void ILI9341_Init(){
     WriteData(0); //! Change to rearagne display
 
     WriteCommand(0x29); // Display ON
+}
+
+void draw_Square(uint16_t start_col, uint16_t end_col, uint16_t start_row, uint16_t end_row, char color){
+
+    uint16_t RGB_color;
+    switch (color){
+        case 'b': // black
+            RGB_color = 0x0000;
+            break;
+        
+        case 'w': // white
+            RGB_color = 0xFFFF;
+            break;
+        
+        case 'r': // red
+            RGB_color = 0xF800;
+            break;
+        
+        case 'g': // green
+            RGB_color = 0x07E0;
+            break;
+    }
+
+    WriteCommand(0x2a); // set col address
+        WriteData(start_col >> 8); // send high  byte
+        WriteData((uint8_t)start_col);
+        WriteData(end_col >> 8); // send high byte
+        WriteData((uint8_t)end_col);
+
+    WriteCommand(0x2b); // set row address
+        WriteData(start_row >> 8); // send high  byte
+        WriteData((uint8_t)start_row);
+        WriteData(end_row >> 8); // send high byte
+        WriteData((uint8_t)end_row);
+
+    int total_pixel = ((end_col-start_col+1)*(end_row-start_row+1));
+    WriteCommand(0x2C); // Memory Write
+        for(int i = 0; i<total_pixel; i++){
+            WriteData(RGB_color >> 8); // High bit
+            WriteData((uint8_t)RGB_color);
+        }
 }
