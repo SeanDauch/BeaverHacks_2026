@@ -6,12 +6,6 @@
 #define GPIOA_Base 0x40020000
 #define GPIOA_ODR  *((volatile uint32_t*)(GPIOA_Base + 0x14))
 
-// Rough delay function for initialization
-void delay_ms(volatile uint32_t ms) {
-    ms *= 16000; // Adjust this multiplier if your delay is too fast/slow
-    while(ms--) { __NOP(); }
-}
-
 void DC_Command() {
     GPIOA_ODR &= ~(1<<1); // Pull PA1 LOW for Commands
 }
