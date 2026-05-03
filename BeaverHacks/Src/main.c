@@ -1,4 +1,5 @@
 #include "ILI9341_driver.h"
+#include "game.h"
 
 #include <stdint.h>
 
@@ -6,8 +7,11 @@
 int main(){
     ILI9341_Init();
 
+    fill_screen('w');
+
+    ball game_ball = bouncing_ball_init(200, 120, 10);
+
 	while(1){
-        draw_Square(0, 239, 0, 319, 'b');
-        draw_Square(0, 239, 0, 319, 'w');
+        //move_ball(&game_ball);
     }
 }

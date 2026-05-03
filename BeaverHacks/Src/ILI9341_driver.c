@@ -130,3 +130,7 @@ void draw_Square(uint16_t start_col, uint16_t end_col, uint16_t start_row, uint1
         while(SPI_SR & (1<<7)){}
         CS_disable();
 }
+
+void fill_screen(char color){
+    draw_Square(0, max_cols, 0, max_rows, color);
+}
