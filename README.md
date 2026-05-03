@@ -1,5 +1,6 @@
 # BeaverHacks_2026
 
+LCD "Gameboy" for BeaverHack hackathon
 To Do:
 
     1. Make SPI driver - DONE
