@@ -18,11 +18,6 @@
 
 #include <stdint.h>
 
-// Rough delay function for initialization
-void delay_ms(volatile uint32_t ms) {
-    ms *= 16000; // Adjust this multiplier if your delay is too fast/slow
-    while(ms--) { __NOP(); }
-}
 
 int main(void)
 {
